@@ -1,14 +1,29 @@
 export function authModule(client) {
     return {
-        async login(email, password) {
-            return client.request("/auth/login", {
+        async login({user_name, phone, email, password} = {}) {
+            const account = user_name || phone || email;
+            if (!account) {
+                throw new Error("必须提供 user_name、phone 或 email 之一");
+            }
+            if (!password) {
+                throw new Error("必须提供 password");
+            }
+            const res = await client.request("/login/passwd", {
                 method: "POST",
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({
+                    phone: account,
+                    password: password
+                })
             });
+            if (res.success) {
+                client.setToken(res.data);
+            }
+            return res;
         },
 
         async logout() {
-            return client.request("/auth/logout", { method: "POST" });
+            client.setToken(null);
+            return client.request("/logout", {method: "GET"});
         }
     };
 }
