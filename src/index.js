@@ -7,7 +7,7 @@ export function createClient(config) {
 
     return {
         auth: authModule(client),
-        table: dbModule(client)
+        db: dbModule(client),
         // 未来可以扩展 db, storage, etc.
     };
 }
