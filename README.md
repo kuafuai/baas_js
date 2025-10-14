@@ -138,11 +138,7 @@ const removed = await client.db
   .eq("id", 123);
 ```
 
-请求路径：所有数据操作最终走 `POST /api/data/invoke?table=<table>&method=<method>`，请求体为构建器聚合后的对象。
-
 #### api 模块
-
-调用自定义后端 API，路径规则：`POST /api/<apiName>`。
 
 方法：
 
