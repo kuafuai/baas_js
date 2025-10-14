@@ -9,6 +9,22 @@ class QueryBuilder {
     list() {
         return new FilterBuilder(this.client, this.table, 'list')
     }
+
+    get() {
+        return new FilterBuilder(this.client, this.table, 'get')
+    }
+
+    insert() {
+        return new DataBuilder(this.client, this.table, "add");
+    }
+
+    update() {
+        return new DataBuilder(this.client, this.table, "update")
+    }
+
+    delete() {
+        return new FilterBuilder(this.client, this.table, "delete");
+    }
 }
 
 class FilterBuilder {
@@ -121,6 +137,42 @@ class FilterBuilder {
         return await this.client.request(`/api/data/invoke?table=${this.table}&method=${this.method}`, {
             method: "POST",
             body: this.filters ? JSON.stringify(this.filters) : undefined
+        });
+    }
+
+    then(resolve, reject) {
+        this._execute().then(resolve, reject);
+    }
+
+}
+
+class DataBuilder extends FilterBuilder {
+    constructor(client, table, method) {
+        super(client, table, method);
+        this.data = {};
+    }
+
+    values(data) {
+        this.data = {...data};
+        return this;
+    }
+
+    set(data) {
+        this.data = {...data};
+        return this;
+    }
+
+    build() {
+        return {
+            ...this.filters,
+            ...this.data
+        };
+    }
+
+    async _execute() {
+        return await this.client.request(`/api/data/invoke?table=${this.table}&method=${this.method}`, {
+            method: "POST",
+            body: JSON.stringify(this.build())
         });
     }
 
