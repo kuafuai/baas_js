@@ -75,16 +75,20 @@ SDK 会将登录后返回的 token 保存在 `localStorage` 的 `baas_token` 键
 
 - `login({ user_name?, phone?, email?, password })`
   - 三选一：`user_name` / `phone` / `email`，必须提供其一；同时必须提供 `password`。
-  - 成功后会自动保存 token：`client.setToken(res.data)`（当 `res.success` 为 `true`）。
+  - 成功后会自动保存 token ，localStorage 存储key `baas_token`。
   - 请求：`POST /login/passwd`，请求体：`{ phone: account, password }`。
 
 - `logout()`
   - 清除本地 token，并调用 `GET /logout`。
 
+- `register(data)`
+  - 注册接口，对象类型，包含要添加的字段数据,字段名必须与数据集的字段名一致。
+
 用法示例：
 
 ```javascript
 await client.auth.login({ phone: "13800000000", password: "******" });
+await client.auth.register({  })
 await client.auth.logout();
 ```
 

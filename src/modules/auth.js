@@ -21,6 +21,13 @@ export function authModule(client) {
             return res;
         },
 
+        async register(data) {
+            return await client.request("/login/register", {
+                method: "POST",
+                body: JSON.stringify(data)
+            });
+        },
+
         async logout() {
             client.setToken(null);
             return client.request("/logout", {method: "GET"});
