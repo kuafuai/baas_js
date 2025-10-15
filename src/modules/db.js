@@ -10,6 +10,10 @@ class QueryBuilder {
         return new FilterBuilder(this.client, this.table, 'list')
     }
 
+    page() {
+        return new FilterBuilder(this.client, this.table, 'page')
+    }
+
     get() {
         return new FilterBuilder(this.client, this.table, 'get')
     }

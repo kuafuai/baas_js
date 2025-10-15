@@ -24,7 +24,6 @@ npm run build
 
 ```javascript
 import { createClient } from "baas_js"; // ESM
-// const { createClient } = require("baas_js"); // CJS
 
 const client = createClient({
   baseUrl: "https://your-baas.example.com",
