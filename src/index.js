@@ -7,12 +7,10 @@ export function createClient(config) {
     const client = new BaaSClient(config);
 
     return {
+        setToken: (token) => client.setToken(token),
         auth: authModule(client),
         db: dbModule(client),
-        api: apiModule(client),
-        setToken(token) {
-            client.setToken(token);
-        },
+        api: apiModule(client)
         // 未来可以扩展 db, storage, etc.
     };
 }
