@@ -21,6 +21,10 @@ export function authModule(client) {
             return res;
         },
 
+        async getUser(){
+            return client.request("/getUserInfo", {method: "GET"});
+        },
+
         async register(data) {
             return await client.request("/login/register", {
                 method: "POST",
