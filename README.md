@@ -78,11 +78,16 @@ SDK 会将登录后返回的 token 保存在 `localStorage` 的 `baas_token` 键
   - 成功后会自动保存 token ，localStorage 存储key `baas_token`。
   - 请求：`POST /login/passwd`，请求体：`{ phone: account, password }`。
 
+- `getUser`
+  - 获取当前登录的用户信息。返回的对象结构与注册接口的对象结构一致。
+  - 不用使用 `db.form().get()`来获取用户。
+
 - `logout()`
   - 清除本地 token，并调用 `GET /logout`。
 
 - `register(data)`
   - 注册接口，对象类型，包含要添加的字段数据,字段名必须与数据集的字段名一致。
+  - 注册流程请调用 `auth.register()`，不要使用 `db.insert("users")`
 
 用法示例：
 
